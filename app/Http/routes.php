@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('test');
-});
+Route::get('/{offset}', 'CalendarController@show');
 
 // API routes...
 Route::get('/api/v1/calendar/rules', function() {

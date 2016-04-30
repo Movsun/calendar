@@ -12,16 +12,16 @@ class khmerCalendarsTableSeeder extends Seeder
      */
     public function run()
     {
-        $startDate = Carbon::create(1800, 1, 1);
+        $startDate = Carbon::create(1900, 1, 1);
         $currentDate = $startDate;
-        $endDate = Carbon::create(5000, 1, 1);
-        $khmerYear = 2343;
+        $endDate = Carbon::create(2100, 1, 1);
+        $khmerYear = 2443;
         $khmerMonth = 1;
-        $khmerDay = 6;
-        $isLeapDay = true;
-        $isLeapMonth = false;
+        $khmerDay = 1;
+        $isLeapDay = false;
+        $isLeapMonth = true;
         $dayInMonth = [
-          29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30
+          29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 30, 30
         ];
         $maxDay = $dayInMonth[$khmerMonth];
 
@@ -50,15 +50,19 @@ class khmerCalendarsTableSeeder extends Seeder
             $khmerDay = 1;
             $khmerMonth += 1;
 
-            if ($khmerMonth == 12 || $khmerMonth == 14) {
-              $khmerMonth = 1;
+            if ($khmerMonth == 12) {
+              $khmerMonth = 0;
+            }
+
+            if ($khmerMonth == 14) {
+              $khmerMonth = 8;
             }
 
             if ($khmerMonth == 7 && $isLeapMonth) {
               $khmerMonth = 12;
             }
 
-            if ($khmerMonth == 7 && $isLeapDay) {
+            if ($khmerMonth == 6 && $isLeapDay) {
               $maxDay = 30;
             } else {
               $maxDay = $dayInMonth[$khmerMonth];
@@ -70,7 +74,7 @@ class khmerCalendarsTableSeeder extends Seeder
 
     // return boolean
     public function khmerSolarLeap($be_year){
-        $aharkun_mod = ($be_year * 292207 + 499) * 800;
+        $aharkun_mod = ($be_year * 292207 + 499) % 800;
         $kromthupul = 800 - $aharkun_mod;
         return $kromthupul <= 207;
     }
