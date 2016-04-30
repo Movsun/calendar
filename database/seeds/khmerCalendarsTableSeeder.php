@@ -12,14 +12,14 @@ class khmerCalendarsTableSeeder extends Seeder
      */
     public function run()
     {
-        $startDate = Carbon::create(2016, 1, 1);
+        $startDate = Carbon::create(1800, 1, 1);
         $currentDate = $startDate;
-        $endDate = Carbon::create(2017, 1, 1);
-        $khmerYear = 2559;
-        $khmerMonth = 0;
-        $khmerDay = 22;
-        $isLeapDay = false;
-        $isLeapMonth = true;
+        $endDate = Carbon::create(5000, 1, 1);
+        $khmerYear = 2343;
+        $khmerMonth = 1;
+        $khmerDay = 6;
+        $isLeapDay = true;
+        $isLeapMonth = false;
         $dayInMonth = [
           29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30
         ];
@@ -32,7 +32,7 @@ class khmerCalendarsTableSeeder extends Seeder
           DB::table('khmer_calendars')->insert([
             'international_date' => $currentDate,
             'khmer_year' => $khmerYear,
-            'khmer_months_id' => $khmerMonth,
+            'khmer_months_id' => $khmerMonth+1,
             'khmer_day' => $khmerDay,
           ]);
 
@@ -47,7 +47,7 @@ class khmerCalendarsTableSeeder extends Seeder
 
           $khmerDay +=1;
           if ($khmerDay > $maxDay) {
-            $khmerDay == 1;
+            $khmerDay = 1;
             $khmerMonth += 1;
 
             if ($khmerMonth == 12 || $khmerMonth == 14) {
@@ -131,7 +131,7 @@ class khmerCalendarsTableSeeder extends Seeder
       } else if ($this->isLeapMonth($be_year -1) && $this->calculateLeapDay($be_year-1)) {
         return true;
       } else {
-        return calculateLeapDay($be_year);
+        return $this->calculateLeapDay($be_year);
       }
     }
 
