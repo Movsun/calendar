@@ -14,12 +14,14 @@ class khmerCalendarsTableSeeder extends Seeder
     {
         $startDate = Carbon::create(1900, 1, 1);
         $currentDate = $startDate;
-        $endDate = Carbon::create(2100, 1, 1);
+        $endDate = Carbon::create(3000, 1, 1);
         $khmerYear = 2443;
         $khmerMonth = 1;
         $khmerDay = 1;
+        $isAHolyDay = false;
         $isLeapDay = false;
         $isLeapMonth = true;
+        $khmerYearId = 12;
         $dayInMonth = [
           29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 30, 30
         ];
@@ -30,10 +32,12 @@ class khmerCalendarsTableSeeder extends Seeder
         while ($currentDate < $endDate) {
 
           DB::table('khmer_calendars')->insert([
-            'international_date' => $currentDate,
+            'date' => $currentDate,
             'khmer_year' => $khmerYear,
             'khmer_months_id' => $khmerMonth+1,
             'khmer_day' => $khmerDay,
+            'khmer_years_id' => $khmerYearId,
+            'is_a_holy_day' => $isAHolyDay,
           ]);
 
           $currentDate = $currentDate->addDay();
@@ -49,6 +53,11 @@ class khmerCalendarsTableSeeder extends Seeder
           if ($khmerDay > $maxDay) {
             $khmerDay = 1;
             $khmerMonth += 1;
+            $khmerYearId += 1;
+
+            if ($khmerYearId == 13) {
+              $khmerYearId = 1;
+            }
 
             if ($khmerMonth == 12) {
               $khmerMonth = 0;
@@ -68,6 +77,13 @@ class khmerCalendarsTableSeeder extends Seeder
               $maxDay = $dayInMonth[$khmerMonth];
             }
           }
+
+          if ($khmerDay == 8 || $khmerDay == 15 || $khmerDay == 23 || $khmerDay == $maxDay) {
+            $isAHolyDay = true;
+          } else {
+            $isAHolyDay = false;
+          }
+
         }
     }
 

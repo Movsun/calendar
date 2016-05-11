@@ -14,7 +14,7 @@
   <hr/>
 
   <?php $counter = 0 ?>
-  @for ($i=0; $i<7; $i++)
+  @for ($i=0; $i<6; $i++)
 
     <div class="row">
       <div class="col-sm-3">
@@ -22,7 +22,7 @@
       @for ($j=0; $j<7; $j++)
 
         <div class="col-sm-1">
-          {{ $khmerCalendars[$counter]->international_date }}
+          {{ $khmerCalendars[$counter]->date }}
           {{ $khmerMonths[$khmerCalendars[$counter]->khmer_months_id-1]->name }}
           {{ $day[$khmerCalendars[$counter]->khmer_day-1] }}
 
